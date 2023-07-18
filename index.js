@@ -1,13 +1,13 @@
 const inquirer = require("inquirer");
 const fs = require("fs");
-const generateSvg = require("./lib/generateSVG")
+const generateSvg = require("./lib/SVG")
 
-//The questions you will be asked after typing node index.js in your terminal
+//Questions asked in terminal
 const logoQuestions = [
     {
         type: "input",
         name: "title",
-        message: "What would you like your logo to say? (Up to 3 characters)",
+        message: "What would you like your logo to say? (3 characters)",
         validate: function(input) {
             if (input.length > 3) {
                 return "Only a maximum of 3 characters allowed";
@@ -33,7 +33,7 @@ const logoQuestions = [
     }
 ];
 
-//This is what actually creates the svg file
+//Creates Svg
 inquirer.prompt(logoQuestions).then((response) => {
 
     fs.writeFile("logo.svg", generateSvg(response), (err) =>
