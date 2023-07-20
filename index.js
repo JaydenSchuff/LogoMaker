@@ -1,8 +1,9 @@
+//requires
 const inquirer = require("inquirer");
 const fs = require("fs")
 const createSVG = require("./lib/createSVG");
 
-// Questions
+// Questions asked in console
 
 const questionLog = [
     {
@@ -34,15 +35,7 @@ const questionLog = [
     },
 ];
 
-// Create SVG
-
-// inquirer.createPromptModule(questionLog).then((response) => {
-
-//     fs.writeFile("logo.svg", createSVG(response), (err) =>
-//         err ? console.log(err) : console.log("generated logo.svg")
-//     );
-// });
-
+//Creates the SVG file 
 inquirer.prompt(questionLog).then((response) => {
 
     fs.writeFile("logo.svg", createSVG(response), (err) =>
