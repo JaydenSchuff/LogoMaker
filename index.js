@@ -1,42 +1,51 @@
 const inquirer = require("inquirer");
-const fs = require("fs");
-const generateSvg = require("./lib/SVG")
+const fs = require("fs")
+const createSVG = require("./lib/createSVG");
 
-//Questions asked in terminal
-const logoQuestions = [
-    {
-        type: "input",
-        name: "title",
-        message: "What would you like your logo to say? (3 characters)",
-        validate: function(input) {
-            if (input.length > 3) {
-                return "Only a maximum of 3 characters allowed";
-             }
-             return true
-        }
-    },
-    {
-        type: "input",
-        name: "textColor",
-        message: "What color would you like the text to be? (Can be a color or a hexadecimal code)",
-    },
+// Questions
+
+const questionLog = [
     {
         type: "list",
         name: "shape",
-        message: "Choose a shape you would like in your logo!",
-        choices: ["Circle", "Triangle", "Square"]
+        message: "Pick a shape:",
+        choices: ["Square", "Circle", "Triangle"],
     },
     {
         type: "input",
         name: "shapeColor",
-        message: "What color would you like your shape to be? (Can be a color or a hexadecimal code)",
-    }
+        message: "What color would you like for the shape? (name or hexagon):",
+    },
+    {
+        type: "input",
+        name: "company",
+        message: "What is the abbreviation of your company (max of 3 letters):",
+        validate: function(input){
+            if (input.length > 3){
+                return "max of 3 letters allowed";
+            }
+            return true
+            }
+    },
+    {
+        type: "input",
+        name: "textColor",
+        message: "What color would you like for the text? (name or hexagon):",
+    },
 ];
 
-//Creates Svg
-inquirer.prompt(logoQuestions).then((response) => {
+// Create SVG
 
-    fs.writeFile("logo.svg", generateSvg(response), (err) =>
+// inquirer.createPromptModule(questionLog).then((response) => {
+
+//     fs.writeFile("logo.svg", createSVG(response), (err) =>
+//         err ? console.log(err) : console.log("generated logo.svg")
+//     );
+// });
+
+inquirer.prompt(questionLog).then((response) => {
+
+    fs.writeFile("logo.svg", createSVG(response), (err) =>
         err ? console.log(err) : console.log("Generated logo.svg")
     );
 });
